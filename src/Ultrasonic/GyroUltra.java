@@ -357,17 +357,6 @@ public static void correctGiro1(){
 		mB.rotate(-mB.getTachoCount()+50,true);
 		mB1.rotate(-mB1.getTachoCount()+50);
 		
-		/*aux1=sampleU[0];
-		while(aux1>0.5){
-			//pilot.forward();
-			ultrasonicSamples.fetchSample(sampleU, 0);
-			Delay.msDelay(250);
-			System.out.println(sampleU[0]);
-			aux1=sampleU[0];
-		}
-		pilot.stop();*/
-		//pilot.travel(-300);
-		//pilot.travel(50);
 		giro(-90);
 		pilot.travel(sampleU[0]*100+100);
 	}
