@@ -2,7 +2,9 @@ package Ultrasonic;
 
 import java.util.ArrayList;
 
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
@@ -28,6 +30,8 @@ public class GyroUltra {
 	private static SampleProvider gyroSamples;
 	private static SampleProvider ultrasonicSamples;
 	
+	static EV3MediumRegulatedMotor claw;
+	
 	static float[] sample= { 0.0f };
 	static float[] sampleC= { 0.0f };
 	static float[] sampleU= { 0.0f };
@@ -42,6 +46,20 @@ public class GyroUltra {
 	
 	public static void main(String[] args) {
 		GyroUltra test = new GyroUltra();
+	}
+	
+	public static void take()
+	{
+		LCD.drawString("Atrapando...", 0, 0);
+		claw.rotate(320);
+		LCD.clear();
+	}
+	
+	public static void drop()
+	{
+		LCD.drawString("Dejando...", 0, 0);
+		claw.rotate(-320);
+		LCD.clear();
 	}
 	
 	public static void correctGiro(){
@@ -365,6 +383,7 @@ public static void correctGiro1(){
 		
 		mB = new EV3LargeRegulatedMotor(MotorPort.B);
 		mB1 = new EV3LargeRegulatedMotor(MotorPort.A);
+		claw = new EV3MediumRegulatedMotor(MotorPort.C);
 		gs = new EV3GyroSensor(SensorPort.S1);
 		cs = new EV3ColorSensor(SensorPort.S2);
 		us = new EV3UltrasonicSensor(SensorPort.S3);
@@ -372,6 +391,7 @@ public static void correctGiro1(){
 		gyroSamples = gs.getAngleMode();
 		colorSamples = cs.getColorIDMode();
 		colorSamples1 = cs1.getColorIDMode();
+		
 		ultrasonicSamples = us.getDistanceMode();
 		wheel1 = WheeledChassis.modelWheel(mB1, 56.0).offset(-94.5);
 	   //offset es la distancia del centro a la rueda
@@ -386,6 +406,7 @@ public static void correctGiro1(){
 	   gs.reset();
 	   //control();
 	   //humanoid();
+	   
 	   
 	   for(int i=0;i<8; ++i){
 		   pilot.forward();
