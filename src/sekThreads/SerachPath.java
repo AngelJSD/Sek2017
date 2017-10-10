@@ -41,14 +41,14 @@ public class SerachPath extends Thread{
 	public SerachPath(DataExchange DE){
 		
 		DEobj = DE;
-		mB = new EV3LargeRegulatedMotor(MotorPort.B);
-		mB1 = new EV3LargeRegulatedMotor(MotorPort.A);
-		gs = new EV3GyroSensor(SensorPort.S1);
-		cs = new EV3ColorSensor(SensorPort.S2);
-		cs1 = new EV3ColorSensor(SensorPort.S4);
-		gyroSamples = gs.getAngleMode();
-		colorSamples = cs.getColorIDMode();
-		colorSamples1 = cs1.getColorIDMode();
+		mB = DE.mB;
+		mB1 = DE.mB1;
+		gs = DE.gs;
+		cs = DE.cs;
+		cs1 = DE.cs1;
+		gyroSamples = DE.gyroSamples;
+		colorSamples = DE.colorSamples;
+		colorSamples1 = DE.colorSamples1;
 		
 		wheel1 = WheeledChassis.modelWheel(mB1, 56.0).offset(-94.5);
 	   //offset es la distancia del centro a la rueda
@@ -100,8 +100,11 @@ public class SerachPath extends Thread{
 		colorSamples1.fetchSample(sampleC, 0);
 		System.out.println(sampleC[0]);
 		while((int)sample[0]== Color.WHITE && (int)sampleC[0]== Color.WHITE){
-			while (DEobj.getHumanoid());
 			
+			if(DEobj.getHumanoid()){
+				while (DEobj.getHumanoid());
+				pilot.forward();
+			}
 			colorSamples.fetchSample(sample, 0);
 			System.out.println(sample[0]);
 			colorSamples1.fetchSample(sampleC, 0);
@@ -182,6 +185,8 @@ public class SerachPath extends Thread{
 		   pilot.setLinearSpeed(250);
 		   
 		   //pilot.travel(200);
+		   System.out.println("Giro 180");
+		   gs.reset();
 		   giro(180);
 		   //pilot.travel(30);
 		   //pilot.setLinearSpeed(15);
