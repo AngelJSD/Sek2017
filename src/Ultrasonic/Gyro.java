@@ -1,6 +1,7 @@
 package Ultrasonic;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
@@ -34,6 +35,7 @@ public class Gyro {
 	String colorName = "";
 	
 	static ArrayList<int[]> map = new ArrayList<int[]>();
+	static Stack<Integer> pila = new Stack<Integer>();
 	//private static int map[][];
 	
 	
@@ -85,6 +87,9 @@ public class Gyro {
 			}
 			if((int) sample[0]!=Color.WHITE && (int) sample[0]!=Color.BLACK && visit==false){
 				
+				
+				pila.push(1);
+				
 				if(map.size()>0){
 					map.get(map.size()-1)[it]=map.size();
 				}
@@ -100,7 +105,6 @@ public class Gyro {
 						giro(90);
 						gs.reset();
 					}
-					
 				}
 				if((int) sample[0]==Color.BLACK){
 					if(map.size()>0){
