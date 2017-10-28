@@ -14,7 +14,7 @@ public class Controller {
 		DHobj = new DetectHumanoid(DE);
 		SPobj = new SerachPath(DE);
 		
-		DHobj.start();
+		//DHobj.start();
 		SPobj.start();
 		
 		while(!Button.ESCAPE.isDown()){
